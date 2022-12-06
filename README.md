@@ -9,9 +9,9 @@
 - 담당: Git Master, 로그인(Security), 일정관리, 업무관리
 - 내용
     - SpringFramework, MyBatis로 개발하였던 레거시 프로젝트를 **SpringBoot, JPA로 개선**
-    → 기존의 xml 설정 파일을 java Config 파일로 변환
-    → 보다 더 **객체지향적인 설계**
-    → DB Vendor가 변하더라도 코드 변경 없이 사용 가능하도록 Native Query 배제
+    <br>→ 기존의 xml 설정 파일을 java Config 파일로 변환
+    <br>→ 보다 더 **객체지향적인 설계**
+    <br>→ DB Vendor가 변하더라도 코드 변경 없이 사용 가능하도록 Native Query 배제
     - OracleDB 사용 감소 추세에 따라 **DB를 MySQL로 전환**
     - Junit을 통한 단위테스트 진행
     - Git을 통한 형상관리
