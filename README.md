@@ -18,4 +18,4 @@
     - 애자일 방법론을 채택하여 매일 아침 애자일 스크럼 회의 진행
     
     
-🔗 [1차 프로젝트](https://github.com/cocobini/shiftworks)
+🔗 [1차 프로젝트](https://github.com/chaebini/shiftworks)
