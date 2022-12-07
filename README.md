@@ -1,6 +1,6 @@
 # 💻 Shiftworksboot (2022)
 
-***KOSTA FINAL PROJECT - 2차*** 
+***KOSTA FINAL PROJECT - 2차*** / [📄 포트폴리오](https://docs.google.com/presentation/d/1rttHUe7aAMxpQ76MAXWj0zSivruam0E_X2pU2RgdAfM/edit?usp=sharing)
 
 
 - 참여인원: 4명
