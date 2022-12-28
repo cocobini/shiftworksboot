@@ -36,15 +36,15 @@ public class ScheduleService {
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-            Date start = dateFormat.parse(s.getStart_date());
-            Date end = dateFormat.parse(s.getEnd_date());
+            Date start = dateFormat.parse(s.getStartDate());
+            Date end = dateFormat.parse(s.getEndDate());
             Date sch_date = start;
 
 
             // 시작일~종료일 기간에 일정 객체 생성
             while (sch_date.getTime() <= end.getTime()) {
                 ScheduleDto dto = new ScheduleDto(s);
-                dto.setSch_date(dateFormat.format(sch_date));
+                dto.setSchDate(dateFormat.format(sch_date));
 
                 // 반환 리스트에 객체 추가
                 dtoList.add(dto);

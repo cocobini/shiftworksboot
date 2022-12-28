@@ -8,24 +8,19 @@ import org.shiftworksboot.entity.Alarm;
 @Getter @Setter @ToString
 public class AlarmDto {
 
-    private Integer alarm_id;
+    private Integer alarmId;
 
     private String content;
 
-    // 로그인 구현 후 수정
-    // private String emp_id;
-    // private String dept_id;
-    // private String regDate;
+    private String empId;
 
     public AlarmDto() {
     }
 
     public AlarmDto(Alarm alarm) {
-        this.alarm_id = alarm.getAlarm_id();
+        this.alarmId = alarm.getAlarmId();
         this.content = alarm.getContent();
-        // 로그인 구현 후 수정
-        // this.emp_id = alarm.getEmp_id();
-        // this.dept_id = alarm.getDept_id();
+        this.empId = alarm.getEmployee().getEmpId();
     }
 
 }

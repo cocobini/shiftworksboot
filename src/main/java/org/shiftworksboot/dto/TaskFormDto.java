@@ -15,12 +15,12 @@ import java.util.List;
 @Getter @Setter
 public class TaskFormDto {
 
-    private Integer task_id;
-    private String task_title;
-    private String task_content;
-    private Character t_private;
+    private Integer taskId;
+    private String taskTitle;
+    private String taskContent;
+    private Character tPrivate;
     private Character notification;
-    private TaskDept dept_id;
+    private TaskDept department;
 
 
     // 첨부파일 저장을 위한 list
@@ -33,7 +33,7 @@ public class TaskFormDto {
     public Task createTask() {
         // 매핑전략(dept_id가 task_id에 매핑되는 것 방지)
         modelMapper.typeMap(TaskFormDto.class, Task.class).addMappings(mapper -> {
-            mapper.map(TaskFormDto::getDept_id, Task::setDept_id);
+            mapper.map(TaskFormDto::getDepartment, Task::setDepartment);
         });
         return modelMapper.map(this, Task.class);
     }

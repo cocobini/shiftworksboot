@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface ScheduleRepositoryCustom {
 
-    List<Schedule> findMySchedule(String empId, String sch_group, String selectedDate);
+    List<Schedule> findMySchedule(String empId, String schGroup, String selectedDate);
 
 }

@@ -11,7 +11,7 @@ var scheduleService = (function(){
 
         $.ajax({
             type: 'get',
-            url: '/schedule/' + param.sch_group + "/" + param.selectedDate,
+            url: '/schedule/' + param.schGroup + "/" + param.selectedDate,
             success: function(result) {
                 if (callback) {
 					callback(result);
@@ -90,7 +90,7 @@ var scheduleService = (function(){
     function updateSchedule(param, callback, error) {
         $.ajax({
             type: 'put',
-            url: '/schedule/' + param.sch_id,
+            url: '/schedule/' + param.schId,
             data: JSON.stringify(param),
             beforeSend : function(xhr){
                 xhr.setRequestHeader(csrf_header, csrf_token);
@@ -218,14 +218,14 @@ $(document).ready(function(){
     // 선택 일자, 선택 그룹을 저장하는 객체
     var listparam = {};
     listparam.selectedDate;
-    listparam.sch_group;
+    listparam.schGroup;
     
     
     /* * * * * * * * * * * * * * * * * * *
             DB 출력 전 데이터 처리
     * * * * * * * * * * * * * * * * * * */
     // 페이지 로딩 시 선택된 그룹 값을 프로퍼티에 할당
-    listparam.sch_group = $('.sch_group').val();
+    listparam.schGroup = $('.schGroup').val();
     
     // 월별, 주별, 일별 탭 선택 시 타입 변경
     $('.nav li').on("click", function() {
@@ -642,9 +642,9 @@ $(document).ready(function(){
         e.preventDefault();
 
         // 그룹 선택 결과 반영
-        $('.sch_group').val($(this).attr("href"));
-        listparam.sch_group = $('.sch_group').val();
-        $('.sch_group').text($(this).text());
+        $('.schGroup').val($(this).attr("href"));
+        listparam.schGroup = $('.schGroup').val();
+        $('.schGroup').text($(this).text());
 
         // 선택된 탭으로 이동
         selectedTap.trigger("click");
@@ -674,20 +674,20 @@ $(document).ready(function(){
         list.forEach((item) => {
             html = "";
 
-            if(item.sch_title != null) {
+            if(item.schTitle != null) {
                 html += '<tr>';
-                html += '<td id="' + item.sch_id + '" class="eachSch';
-                if(item.sch_group == 'my') {
+                html += '<td id="' + item.schId + '" class="eachSch';
+                if(item.schGroup == 'my') {
                     html += ' my';
-                } else if(item.sch_group == 'dept') {
+                } else if(item.schGroup == 'dept') {
                     html += ' dept';
-                } else if(item.sch_group == 'comp') {
+                } else if(item.schGroup == 'comp') {
                     html += ' comp';
                 }
-                html += '">' + item.sch_title + '</td>';
+                html += '">' + item.schTitle + '</td>';
                 html += '</tr>';
-                console.log(item.sch_date);
-                $('#calendarBody .' + item.sch_date).append(html);
+                console.log(item.schDate);
+                $('#calendarBody .' + item.schDate).append(html);
             }
 
             // end if

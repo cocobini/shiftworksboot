@@ -24,7 +24,7 @@
 					<div class="dropdown">
 						<button class="btn btn-outline-secondary dropdown-toggle selectedDept" type="button"
 							data-bs-toggle="dropdown" aria-expanded="false"
-							value='<c:out value="${ dto.cri.dept_id }"></c:out>'>
+							value='<c:out value="${ dto.cri.department }"></c:out>'>
 							부서
 						</button>
 						<ul class="dropdown-menu deptList">
@@ -61,12 +61,12 @@
 				<td class="writer">비공개여부</td>
 			</tr>
 			<c:forEach items="${tasks}" var="task">
-				<tr class="goDetail" id="${task.task_id}">
-					<td><c:out value="${task.task_id}"/></td>
-					<td><c:out value="${task.dept_id}"/></td>
-					<td><c:out value="${task.task_title}"/></td>
+				<tr class="goDetail" id="${task.taskId}">
+					<td><c:out value="${task.taskId}"/></td>
+					<td><c:out value="${task.department}"/></td>
+					<td><c:out value="${task.taskTitle}"/></td>
 					<td>홍길동</td>
-					<td><c:out value="${task.t_private}"/></td>
+					<td><c:out value="${task.tPrivate}"/></td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -115,7 +115,7 @@
 		}
 		
 		// model attribute 값을 이용하기 위해 변수에 저장
-		var dept_id = '${dto.cri.dept_id}' || 'all';
+		var department = '${dto.cri.department}' || 'all';
 		var pageNum = '${dto.cri.pageNum}' || '1';
 		var type = '${dto.cri.type}' || 'empty';
 		var keyword = '${dto.cri.keyword}' || 'empty';
@@ -130,23 +130,23 @@
 		// 업무 게시글 로우 클릭 시 해당 게시글 상세 페이지로 이동
 		$('tbody').on("click", ".goDetail", function(){
 			// 부서별 조회 기능, 검색 기능, 페이지 넘버링 추가 시 변경 필요
-			location.href="/task/pages/"+ dept_id +"/" + type + "/" + keyword + "/" + pageNum + "/" + $(this).attr("id");
+			location.href="/task/pages/"+ department +"/" + type + "/" + keyword + "/" + pageNum + "/" + $(this).attr("id");
 		});
 		
 		// 페이지 넘버 이동 시 해당 페이지로 이동
 		$('.pageNum').on("click", function(){
-			location.href="/task/pages/"+ dept_id +"/" + type + "/" + keyword + "/" + $(this).text();
+			location.href="/task/pages/"+ department +"/" + type + "/" + keyword + "/" + $(this).text();
 		});
 		// 이전, 이후 버튼 클릭 시 이동
 		$('.prev').on("click", function(e){
 			e.preventDefault();
 			pageNum = (eval(startPage) - 1);
-			location.href="/task/pages/"+ dept_id +"/" + type + "/" + keyword + "/" + pageNum;
+			location.href="/task/pages/"+ department +"/" + type + "/" + keyword + "/" + pageNum;
 		})
 		$('.next').on("click", function(e){
 			e.preventDefault();
 			pageNum = (eval(endPage) + 1);
-			location.href="/task/pages/"+ dept_id +"/" + type + "/" + keyword + "/" + pageNum;
+			location.href="/task/pages/"+ department +"/" + type + "/" + keyword + "/" + pageNum;
 		})
 		
 		// 부서 버튼 클릭 시 해당 부서 결과만 검색
@@ -169,7 +169,7 @@
 		$('#searchBtn').on("click", function(e) {
 			
 			e.preventDefault();
-			location.href="/task/pages/"+ dept_id + "/" + $('.searchType').val() + "/"
+			location.href="/task/pages/"+ department + "/" + $('.searchType').val() + "/"
 							+ $('#searchForm').val() + "/" + pageNum;
 		});
 		

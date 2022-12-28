@@ -19,8 +19,10 @@ public class TaskFile {
     @JoinColumn(name = "task_id")
     private Task task;
 
-    private String file_name;
+    @Column(name = "file_name")
+    private String fileName;
 
-    private String file_src;
+    @Column(name = "file_src")
+    private String fileSrc;
 
 }

@@ -14,7 +14,7 @@ public class Alarm extends BaseTimeEntity{
     @Id
     @Column(name = "alarm_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer alarm_id;
+    private Integer alarmId;
 
     private String content;
 

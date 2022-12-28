@@ -6,7 +6,6 @@ import lombok.ToString;
 import org.shiftworksboot.constant.TaskDept;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "task")
@@ -16,20 +15,23 @@ public class Task extends BaseEntity{
     @Id
     @Column(name = "task_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer task_id;
+    private Integer taskId;
 
-    private String task_title;
+    @Column(name = "task_title")
+    private String taskTitle;
 
     @Lob
-    private String task_content;
+    @Column(name = "task_content")
+    private String taskContent;
 
     @Column(name = "t_private")
-    private Character t_private;
+    private Character tPrivate;
 
     @Column(name = "notification")
     private Character notification;
 
     @Enumerated(EnumType.STRING)
-    private TaskDept dept_id;
+    @Column(name = "dept_id")
+    private TaskDept department;
 
 }

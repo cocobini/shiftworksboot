@@ -16,11 +16,11 @@
 }
 
 /* 페이지 로고 */
-.logo_wrap{
+.logoWrap{
 	text-align: center;	
 	margin: 150px 0;	
 }
-.logo_wrap>span{
+.logoWrap>span{
 	font-size : 100px;
 	font-weight: 1000;
 	text-transform: uppercase;
@@ -28,7 +28,7 @@
 
 
 /* 로그인 area */
-.id_input_box{
+.idInputBox{
 	border: 1px solid black;
 	height:31px;
 	padding: 10px 14px;	
@@ -36,7 +36,7 @@
 	width : 80%;
 	margin : auto;	
 }
-.id_input{
+.idInput{
 	width:100%;
 	height:100%;
 	border:none;
@@ -44,10 +44,10 @@
 }
 
 
-.pw_wrap{
+.pwWrap{
 	margin-top: 40px;
 }
-.pw_input_box{
+.pwInputBox{
 	border: 1px solid black;
 	height:31px;
 	padding: 10px 14px;	
@@ -55,7 +55,7 @@
 	width : 80%;
 	margin : auto;	
 }
-.pw_iput{
+.pwInput{
 	width:100%;
 	height:100%;
 	border:none;
@@ -63,11 +63,11 @@
 }
 
 
-.login_button_wrap{
+.loginButtonWrap{
 	margin-top: 40px;
 	text-align: center;
 }
-.login_button{
+.loginButton{
 	width: 84%;
     height: 80px;
     background-color: #1C3359;
@@ -89,7 +89,7 @@ body {
     font-style: normal;
 }
 /* 로그인 실패시 경고글 */
-.login_warn{
+.loginWarn{
 	margin-top: 30px;
     text-align: center;
     color : red;

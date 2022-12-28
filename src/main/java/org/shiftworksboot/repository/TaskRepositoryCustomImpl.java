@@ -35,10 +35,10 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom{
         QTask qTask = QTask.task;
         List<Task> taskList = queryFactory
                 .selectFrom(qTask)
-                .where(searchTitle(taskDto.getTask_title()),
-                        searchContent(taskDto.getTask_content()),
-                        selectDept(taskDto.getDept_id()))
-                .orderBy(QTask.task.task_id.desc())
+                .where(searchTitle(taskDto.getTaskTitle()),
+                        searchContent(taskDto.getTaskContent()),
+                        selectDept(taskDto.getDepartment()))
+                .orderBy(QTask.task.taskId.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -51,9 +51,9 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom{
         QTask qTask = QTask.task;
         List<Task> taskList = queryFactory
                 .selectFrom(qTask)
-                .where(searchTitle(taskDto.getTask_title()),
-                        searchContent(taskDto.getTask_content()),
-                        selectDept(taskDto.getDept_id()))
+                .where(searchTitle(taskDto.getTaskTitle()),
+                        searchContent(taskDto.getTaskContent()),
+                        selectDept(taskDto.getDepartment()))
                 .fetch();
         return taskList.size();
     }
@@ -62,19 +62,19 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom{
     // where절 조건 입력을 위한 BooleanExpression
 
     // 제목으로 검색
-    private BooleanExpression searchTitle(String task_title) {
-        log.info(task_title);
-        return StringUtils.hasText(task_title) ? QTask.task.task_title.like("%"+task_title+"%") : null;
+    private BooleanExpression searchTitle(String taskTitle) {
+        log.info(taskTitle);
+        return StringUtils.hasText(taskTitle) ? QTask.task.taskTitle.like("%"+taskTitle+"%") : null;
     }
     // 내용으로 검색
-    private BooleanExpression searchContent(String task_content) {
-        log.info(task_content);
-        return StringUtils.hasText(task_content) ? QTask.task.task_content.like("%"+task_content+"%") : null;
+    private BooleanExpression searchContent(String taskContent) {
+        log.info(taskContent);
+        return StringUtils.hasText(taskContent) ? QTask.task.taskContent.like("%"+taskContent+"%") : null;
     }
 
     // 부서별 출력
     private BooleanExpression selectDept(TaskDept taskDept) {
-        return ObjectUtils.isEmpty(taskDept) ? null : QTask.task.dept_id.eq(taskDept);
+        return ObjectUtils.isEmpty(taskDept) ? null : QTask.task.department.eq(taskDept);
     }
 
 }
