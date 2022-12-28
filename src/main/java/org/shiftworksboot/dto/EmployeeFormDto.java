@@ -12,7 +12,6 @@ public class EmployeeFormDto {
 
     @NotBlank(message = "필수 입력 값입니다.")
     private String empId;
-    //private String dept_name;
     @NotBlank(message = "필수 입력 값입니다.")
     private String password;
 
@@ -23,7 +22,7 @@ public class EmployeeFormDto {
     private String mobile;
     private String internal;
     private String email;
-    private String entry_date;
-    private String resignation_date;
+    private String entryDate;
+    private String resignationDate;
 
 }

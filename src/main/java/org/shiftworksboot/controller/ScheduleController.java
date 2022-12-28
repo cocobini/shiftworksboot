@@ -37,17 +37,17 @@ public class ScheduleController {
     }
 
     // 그룹별, 월별 일정 가져오기
-    @GetMapping(value="/{sch_group}/{selectedDate}")
+    @GetMapping(value="/{schGroup}/{selectedDate}")
     public ResponseEntity<List<ScheduleDto>> getList(
-            @PathVariable String sch_group, @PathVariable String selectedDate, Authentication auth) {
+            @PathVariable String schGroup, @PathVariable String selectedDate, Authentication auth) {
 
         // 스케줄 그룹별 보기 미선택 시 null 적용하여 전체 일정 조회
-        if(sch_group.equals("all")) {
-            sch_group = null;
+        if(schGroup.equals("all")) {
+            schGroup = null;
         }
 
         log.info("선택일: " + selectedDate);
-        log.info("선택그룹: " + sch_group);
+        log.info("선택그룹: " + schGroup);
 
         // 로그인한 사람의 일정만 볼 수 있도록 토큰에서 로그인 사용자 정보 추출
         UserDetails ud = (UserDetails) auth.getPrincipal();
@@ -55,7 +55,7 @@ public class ScheduleController {
         List<ScheduleDto> list = new ArrayList<>();
 
         try {
-            list = scheduleService.findMySchedule(ud.getUsername(), sch_group, selectedDate);
+            list = scheduleService.findMySchedule(ud.getUsername(), schGroup, selectedDate);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -65,10 +65,10 @@ public class ScheduleController {
 
     // 일정 상세 보기
     // 일정 상세 보기
-    @GetMapping(value="/{sch_id}")
-    public ResponseEntity<ScheduleDto> getSchedule(@PathVariable Integer sch_id) {
+    @GetMapping(value="/{schId}")
+    public ResponseEntity<ScheduleDto> getSchedule(@PathVariable Integer schId) {
 
-        ScheduleDto schedule = scheduleService.findSchedule(sch_id);
+        ScheduleDto schedule = scheduleService.findSchedule(schId);
 
         return new ResponseEntity<ScheduleDto>(schedule, HttpStatus.OK);
     }
@@ -87,7 +87,7 @@ public class ScheduleController {
 
     // 일정 수정
     @RequestMapping(method = {RequestMethod.PATCH, RequestMethod.PUT},
-            value="/{sch_id}",
+            value="/{schId}",
             produces=MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> updateSchedule(@RequestBody ScheduleFormDto dto) {
 
@@ -97,10 +97,10 @@ public class ScheduleController {
     }
 
     // 일정 삭제
-    @DeleteMapping(value="/{sch_id}",
+    @DeleteMapping(value="/{schId}",
             produces=MediaType.TEXT_PLAIN_VALUE)
-    public ResponseEntity<String> deleteSchedule(@PathVariable Integer sch_id) {
-        scheduleService.deleteSchedule(sch_id);
+    public ResponseEntity<String> deleteSchedule(@PathVariable Integer schId) {
+        scheduleService.deleteSchedule(schId);
         return new ResponseEntity<String>("success", HttpStatus.OK);
 
     }

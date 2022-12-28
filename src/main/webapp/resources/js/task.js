@@ -8,7 +8,7 @@ var taskService = (function(){
 
         $.ajax({
             type: 'get',
-            url: "/task/pages/" + param.dept_id + "/" + param.type + "/" + param.keyword
+            url: "/task/pages/" + param.department + "/" + param.type + "/" + param.keyword
                 + "/" + param.pageNum,
             success: function(result) {
                 if (callback) {
@@ -27,8 +27,8 @@ var taskService = (function(){
     function getTask(param, callback, error) {
         $.ajax({
             type: 'get',
-            url: "/task/pages/" + param.dept_id + "/" + param.type + "/" + param.keyword
-            + "/" + param.pageNum + "/" + param.task_id,
+            url: "/task/pages/" + param.department + "/" + param.type + "/" + param.keyword
+            + "/" + param.pageNum + "/" + param.taskId,
             success: function(result) {
                 if (callback) {
 					callback(result);
@@ -70,8 +70,8 @@ var taskService = (function(){
     function updateTask(param, callback, error) {
         $.ajax({
             type: 'put',
-            url: "/task/pages/" + param.dept_id + "/" + param.type + "/" + param.keyword
-            + "/" + param.pageNum + "/" + param.task_id,
+            url: "/task/pages/" + param.department + "/" + param.type + "/" + param.keyword
+            + "/" + param.pageNum + "/" + param.taskId,
             data: JSON.stringify(param),
             beforeSend : function(xhr){
                 xhr.setRequestHeader(csrf_header, csrf_token);

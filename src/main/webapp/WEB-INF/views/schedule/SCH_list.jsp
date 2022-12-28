@@ -53,7 +53,7 @@
 									</div>
 									<div class="dropdown">
 										<button
-											class="btn btn-outline-secondary dropdown-toggle sch_group"
+											class="btn btn-outline-secondary dropdown-toggle schGroup"
 											type="button" data-bs-toggle="dropdown" aria-expanded="false"
 											value="all">그룹 선택</button>
 										<ul class="dropdown-menu">
@@ -114,7 +114,7 @@
 					<label>일정 그룹 &nbsp;</label>
 					<div class="form-group">
 						<input type="hidden" class="form-control"
-							name="sch_id" id="sch_id" value=""/>
+							name="schId" id="schId" value=""/>
 					</div>
 					<button
 						class="btn btn-outline-secondary dropdown-toggle selectedGroup"
@@ -127,21 +127,21 @@
 					</ul>
 					<div class="form-group">
 						<label>시작일</label> <input type="text" class="form-control"
-							name="start_date" id="start_date">
+							name="startDate" id="startDate">
 						<label>시작시간</label> <input type="text" class="form-control"
-							name="start_time" id="start_time" placeholder="ex) 09:30">
+							name="startTime" id="startTime" placeholder="ex) 09:30">
 					</div>
 					<div class="form-group">
 						<label>종료일</label> <input type="text" class="form-control"
-							name="end_date" id="end_date">
+							name="endDate" id="endDate">
 						<label>종료시간</label> <input type="text" class="form-control"
-							name="end_time" id="end_time" placeholder="ex) 21:30">
+							name="endTime" id="endTime" placeholder="ex) 21:30">
 					</div>
 					<div class="form-group">
-						<label>제목</label> <input class="form-control" name="sch_title">
+						<label>제목</label> <input class="form-control" name="schTitle">
 					</div>
 					<div class="form-group">
-						<label>내용</label> <input class="form-control" name="sch_content">
+						<label>내용</label> <input class="form-control" name="schContent">
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -167,23 +167,23 @@ $(document).ready(function() {
     * * * * * * * * * * * * * * * * * * */
     
     // 폼 선택자를 변수에 저장
-    var sch_id = $('.modal').find("input[name='sch_id']");
-    var sch_group = $('.modal').find(".selectedGroup");
-    var start_date= $('.modal').find("input[name='start_date']");
-    var start_time= $('.modal').find("input[name='start_time']");
-    var end_date= $('.modal').find("input[name='end_date']");
-    var end_time= $('.modal').find("input[name='end_time']");
-    var sch_title= $('.modal').find("input[name='sch_title']");
-    var sch_content = $('.modal').find("input[name='sch_content']");
+    var schId = $('.modal').find("input[name='schId']");
+    var schGroup = $('.modal').find(".selectedGroup");
+    var startDate= $('.modal').find("input[name='startDate']");
+    var startTime= $('.modal').find("input[name='startTime']");
+    var endDate= $('.modal').find("input[name='endDate']");
+    var endTime= $('.modal').find("input[name='endTime']");
+    var schTitle= $('.modal').find("input[name='schTitle']");
+    var schContent = $('.modal').find("input[name='schContent']");
     
     // 시작일, 종료일을 캘린더를 통해 선택 가능하도록 함
     $(function(){
     	// 날짜를 yyyy-MM-dd 형태로 출력하도록 지정
-    	$('#start_date').datepicker({
+    	$('#startDate').datepicker({
     		dateFormat: 'yy-mm-dd',
     		onSelect: function (date) {
-    			// start_date 이전 날짜 선택 불가하게 지정
-    			var endDate = $('#end_date');
+    			// startDate 이전 날짜 선택 불가하게 지정
+    			var endDate = $('#endDate');
     			var startDate = $(this).datepicker('getDate');
     			var minDate = $(this).datepicker('getDate');
     			endDate.datepicker('setDate', minDate);
@@ -193,10 +193,10 @@ $(document).ready(function() {
     		}
     	});
     	
-    	$('#end_date').datepicker({ dateFormat: 'yy-mm-dd' });
+    	$('#endDate').datepicker({ dateFormat: 'yy-mm-dd' });
     	
     	// 시작시간, 종료시간 선택 timepicker
-        $('#start_time').timepicker({
+        $('#startTime').timepicker({
         	// 오전, 오후로 나누지 않고 24시 모두 출력 가능
         	timeFormat: 'HH:mm',
         	interval: 60,
@@ -208,7 +208,7 @@ $(document).ready(function() {
         	dropdown: true,
         	scrollbar: true
     	});
-        $('#end_time').timepicker({
+        $('#endTime').timepicker({
         	timeFormat: 'HH:mm',
         	interval: 60,
        		minTime: '00:00am',
@@ -245,14 +245,14 @@ $(document).ready(function() {
     $('#schInsertBtn').on("click", function() {
         
         let schedule = {
-            sch_group: sch_group.val(),
-            start_date: start_date.val() + ' ' + start_time.val(),
-            end_date: end_date.val() + ' ' + end_time.val(),
-            sch_title: sch_title.val(),
-            sch_content: sch_content.val()
+            schGroup: schGroup.val(),
+            startDate: startDate.val() + ' ' + startTime.val(),
+            endDate: endDate.val() + ' ' + endTime.val(),
+            schTitle: schTitle.val(),
+            schContent: schContent.val()
         }
         
-        console.log(schedule.start_date);
+        console.log(schedule.startDate);
         
         scheduleService.insertSchedule(schedule, function(result){
             
@@ -266,7 +266,7 @@ $(document).ready(function() {
             }
          	
          	// 등록 스케쥴의 시작일로 선택일자 변경
-         	selectedDate = schedule.start_date;
+         	selectedDate = schedule.startDate;
             
             // 등록한 일정 표시를 위해 캘린더영역 새로 불러오기
             $("#month").trigger("click");
@@ -284,7 +284,7 @@ $(document).ready(function() {
     	$('.modal').find("input").val("");
         
         // 해당 일정 PK값 변수에 저장
-        let selected_sch_id = $(this).attr("id");
+        let selectedSchId = $(this).attr("id");
         
         // 불필요한 버튼 숨긴 후 모달 표시
         $('.modal-footer *').show();
@@ -292,16 +292,16 @@ $(document).ready(function() {
         $('.modal').modal("show");
         
         // 선택한 일정 상세보기
-        scheduleService.getSchedule(selected_sch_id, function(result){
+        scheduleService.getSchedule(selectedSchId, function(result){
             
-        	sch_id.val(selected_sch_id);
-            sch_group.val(result.sch_group);
-            start_date.val((result.start_date.split(" "))[0]);
-            start_time.val((result.start_date.split(" "))[1].substr(0, 5));
-            end_date.val((result.end_date.split(" "))[0]);
-            end_time.val((result.end_date.split(" "))[1].substr(0, 5));
-            sch_title.val(result.sch_title);
-            sch_content.val(result.sch_content);
+        	schId.val(selectedSchId);
+            schGroup.val(result.schGroup);
+            startDate.val((result.startDate.split(" "))[0]);
+            startTime.val((result.startDate.split(" "))[1].substr(0, 5));
+            endDate.val((result.endDate.split(" "))[0]);
+            endTime.val((result.endDate.split(" "))[1].substr(0, 5));
+            schTitle.val(result.schTitle);
+            schContent.val(result.schContent);
             
         }) // end getSchedule
         
@@ -312,14 +312,14 @@ $(document).ready(function() {
  	// 일정 수정하기
     $('#schUpdateBtn').on("click", function(e) {
         
-    	console.log(sch_id);
+    	console.log(schId);
         let schedule = {
-                sch_id: eval(sch_id.val()),
-                sch_group: sch_group.val(),
-                start_date: start_date.val(),
-                end_date: end_date.val(),
-                sch_title: sch_title.val(),
-                sch_content: sch_content.val()
+                schId: eval(schId.val()),
+                schGroup: schGroup.val(),
+                startDate: startDate.val(),
+                endDate: endDate.val(),
+                schTitle: schTitle.val(),
+                schContent: schContent.val()
         }
         
         scheduleService.updateSchedule(schedule, function(result) {
@@ -341,7 +341,7 @@ $(document).ready(function() {
     
     $('#schDeleteBtn').on("click", function(){
         
-        scheduleService.deleteSchedule(eval(sch_id.val()), function(result) {
+        scheduleService.deleteSchedule(eval(schId.val()), function(result) {
              
              // 작업 완료 시 모달 숨김
              $('.modal').modal("hide");
@@ -406,11 +406,11 @@ $(document).ready(function() {
     			result.forEach((item) => {
     				
     				// 일정 시작일 저장
-    				let date = new Date(item.start_date);
+    				let date = new Date(item.startDate);
 	    			
     				// 일정 PK, 일정 제목, 일정 시작일 출력
-	    			resultList += '<li class="' + item.start_date + '">';
-	    			resultList += item.sch_title + ' ' + date.getFullYear() + '년 '+ (date.getMonth()+1) + '월 ' 
+	    			resultList += '<li class="' + item.startDate + '">';
+	    			resultList += item.schTitle + ' ' + date.getFullYear() + '년 '+ (date.getMonth()+1) + '월 '
 	    							+ date.getDate() + '일';
 	    			resultList += '</li>';
 	    			
@@ -438,9 +438,9 @@ $(document).ready(function() {
                
                 result.forEach((item) => {
     
-                    let startarr1 = item.start_time.split(' ');
+                    let startarr1 = item.startTime.split(' ');
                     let startarr2 = startarr1[1].split(':');
-                    let endarr1 = item.end_time.split(' ');
+                    let endarr1 = item.endTime.split(' ');
                     let endarr2 = endarr1[1].split(':');
     
                     content += item.name + ' (' + startarr2[0] + ':' + startarr2[1] + '-' + endarr2[0] + ':' + endarr2[1] + ') ';

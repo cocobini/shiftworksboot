@@ -30,8 +30,6 @@ public class EmployeeController {
 
     @GetMapping(value="/login/error")
     public String loginError(){
-//        model.addAttribute("loginErrorMsg",
-//                "사번 또는 비밀번호를 확인해주세요.");
         return "/accessError";
     }
 
@@ -42,13 +40,6 @@ public class EmployeeController {
         return "manager/MGR_new";
     }
 
-//    @PostMapping("/new")
-//    public String employeeForm(EmployeeFormDto employeeFormDto){
-//        Employee employee = Employee.createEmployee(employeeFormDto, passwordEncoder);
-//        employeeService.saveEmployee(employee);
-//
-//        return "redirect:/";
-//    }
 
     @PostMapping(value = "/new")
     public String employeeForm(@Valid EmployeeFormDto employeeFormDto,

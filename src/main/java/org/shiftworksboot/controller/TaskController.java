@@ -22,7 +22,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,24 +64,24 @@ public class TaskController {
     }
 
     // 업무 목록 출력
-    @GetMapping("/pages/{dept_id}/{type}/{keyword}/{pageNum}")
-    public ModelAndView getList(@PathVariable String dept_id, @PathVariable String type,
+    @GetMapping("/pages/{deptId}/{type}/{keyword}/{pageNum}")
+    public ModelAndView getList(@PathVariable String department, @PathVariable String type,
                                 @PathVariable String keyword, @PathVariable Integer pageNum) {
 
         TaskDto taskDto = new TaskDto();
 
         // 검색 조건 처리
-        if(!dept_id.equals("all")) {
-            dept_id = dept_id.toUpperCase();
-            taskDto.setDept_id(TaskDept.valueOf(dept_id));
+        if(!department.equals("all")) {
+            department = department.toUpperCase();
+            taskDto.setDepartment(TaskDept.valueOf(department));
         } else {
-            taskDto.setDept_id(null);
+            taskDto.setDepartment(null);
         }
         if(type.equals("t")) {
-            taskDto.setTask_title(keyword);
+            taskDto.setTaskTitle(keyword);
         }
         if(type.equals("c")) {
-            taskDto.setTask_content(keyword);
+            taskDto.setTaskContent(keyword);
         }
 
         // 페이징 처리를 위한 객체 생성
@@ -106,16 +105,16 @@ public class TaskController {
 
 
     // 업무 상세 보기
-    @GetMapping("/pages/{dept_id}/{type}/{keyword}/{pageNum}/{task_id}")
-    public ModelAndView getTask(@PathVariable String dept_id, @PathVariable String type,
+    @GetMapping("/pages/{department}/{type}/{keyword}/{pageNum}/{taskId}")
+    public ModelAndView getTask(@PathVariable String department, @PathVariable String type,
                                 @PathVariable String keyword, @PathVariable Optional<Integer> pageNum,
-                                @PathVariable Integer task_id, Authentication auth) {
+                                @PathVariable Integer taskId, Authentication auth) {
 
         ModelAndView mav = new ModelAndView();
 
 
         // 선택 게시물 조회
-        Task task = taskRepository.findById(task_id)
+        Task task = taskRepository.findById(taskId)
                 .orElseThrow(EntityNotFoundException::new);
 
         // Task 객체를 DTO 객체로 변환
@@ -137,7 +136,7 @@ public class TaskController {
         UserDetails ud = (UserDetails) auth.getPrincipal();
         Employee emp = employeeRepository.findByEmpId(ud.getUsername());
         // 작성자는 확인할 수 있도록 추가
-        if(!emp.getDepartment().getDeptId().equals(taskDto.getDept_id().toString())
+        if(!emp.getDepartment().getDeptId().equals(taskDto.getDepartment().toString())
             && !emp.getEmpId().equals(taskDto.getCreateBy())) {
             mav.setViewName("accessDenied");
             return mav;
@@ -154,10 +153,10 @@ public class TaskController {
     }
 
 
-    @PutMapping("/pages/{dept_id}/{type}/{keyword}/{pageNum}/{task_id}")
-    public ResponseEntity<String> updateTask(@PathVariable String dept_id, @PathVariable String type,
+    @PutMapping("/pages/{department}/{type}/{keyword}/{pageNum}/{taskId}")
+    public ResponseEntity<String> updateTask(@PathVariable String department, @PathVariable String type,
                                              @PathVariable String keyword, @PathVariable Optional<Integer> pageNum,
-                                             @PathVariable Integer task_id, @RequestBody TaskFormDto taskFormDto) {
+                                             @PathVariable Integer taskId, @RequestBody TaskFormDto taskFormDto) {
 
 
         taskService.saveTask(taskFormDto);
@@ -165,10 +164,10 @@ public class TaskController {
     }
 
     // 업무 삭제
-    @DeleteMapping("/{task_id}")
-    public ResponseEntity<String> deleteTask(@PathVariable Integer task_id) {
+    @DeleteMapping("/{taskId}")
+    public ResponseEntity<String> deleteTask(@PathVariable Integer taskId) {
 
-        return new ResponseEntity<String>(taskService.deleteTask(task_id), HttpStatus.OK);
+        return new ResponseEntity<String>(taskService.deleteTask(taskId), HttpStatus.OK);
     }
 
     // 파일 등록
@@ -193,7 +192,7 @@ public class TaskController {
             TaskFileDto taskFile = new TaskFileDto();
 
             // 파일 저장 경로
-            taskFile.setFile_src(getFolder());
+            taskFile.setFileSrc(getFolder());
 
             // uuid 생성
             UUID uuid = UUID.randomUUID();
@@ -203,7 +202,7 @@ public class TaskController {
             // 업로드 파일 실제 이름
             String uploadFileName = m.getOriginalFilename();
             // 파일명 vo객체에 저장
-            taskFile.setFile_name(uploadFileName);
+            taskFile.setFileName(uploadFileName);
 
             // uuid + 실제 파일명
             uploadFileName = uuid.toString() + "_" + uploadFileName;
@@ -265,7 +264,7 @@ public class TaskController {
     public ResponseEntity<String> deleteFile(@RequestBody TaskFileDto dto) {
         File file;
 
-        log.info(dto.getFile_name());
+        log.info(dto.getFileName());
         log.info(dto.getUuid());
 
         // DB까지 업로드된 경우 DB에서 해당 데이터 삭제
@@ -276,7 +275,7 @@ public class TaskController {
 
         try {
             // 삭제 대상을 파일 객체로 만듦
-            file = new File("C:\\shiftworksboot\\upload\\" + dto.getFile_name());
+            file = new File("C:\\shiftworksboot\\upload\\" + dto.getFileName());
             // 실제 파일이 존재하는 경우 삭제
             if(file.exists()) {
                 file.delete();

@@ -36,12 +36,12 @@ public class TaskService {
         Task savedTask = taskRepository.save(task);
 
         // 해당 업무 부서의 부서원들에게 알림 생성
-        List<Employee> employees = employeeRepository.findByDepartmentDeptId(taskFormDto.getDept_id().toString());
+        List<Employee> employees = employeeRepository.findByDepartmentDeptId(taskFormDto.getDepartment().toString());
 
         for(Employee e : employees) {
 
             Alarm alarm = new Alarm();
-            alarm.setContent("[" + task.getTask_title() + "] 업무가 등록되었습니다.");
+            alarm.setContent("[" + task.getTaskTitle() + "] 업무가 등록되었습니다.");
 
             alarm.setEmployee(employeeRepository.findByEmpId(e.getEmpId()));
             alarmRepository.save(alarm);

@@ -12,15 +12,15 @@ import java.time.LocalDateTime;
 @Getter @Setter @ToString
 public class ScheduleFormDto {
 
-    private Integer sch_id;
+    private Integer schId;
     // private Booking booking;
-    private String sch_title;
-    private String sch_content;
+    private String schTitle;
+    private String schContent;
 
-    private String start_date;
-    private String end_date;
+    private String startDate;
+    private String endDate;
 
-    private String sch_group;
+    private String schGroup;
     private String createdBy;
 
     private static ModelMapper modelMapper = new ModelMapper();

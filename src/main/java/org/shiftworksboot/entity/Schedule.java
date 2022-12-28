@@ -15,20 +15,26 @@ public class Schedule extends BaseEntity{
     @Id
     @Column(name = "sch_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer sch_id;
+    private Integer schId;
 
     // Booking 관련 기능 merge 후 추가
     //@OneToOne(fetch = FetchType.LAZY)
     //@JoinColumn(name = "book_id")
     //private Booking booking;
 
-    private String sch_title;
-    private String sch_content;
-    private String start_date;
-    private String end_date;
-    private String sch_group;
+    @Column(name = "sch_title")
+    private String schTitle;
 
-    @Transient
-    private String sch_date;
+    @Column(name = "sch_content")
+    private String schContent;
+
+    @Column(name = "start_date")
+    private String startDate;
+
+    @Column(name = "end_date")
+    private String endDate;
+
+    @Column(name = "sch_group")
+    private String schGroup;
 
 }

@@ -16,10 +16,15 @@ public class WorkSch {
 
     @Id
     @Column(name = "emp_id")
-    private String emp_id;
+    private String empId;
 
-    private String dept_id;
-    private String start_time;
-    private String end_time;
+    @Column(name = "dept_id")
+    private String department;
+
+    @Column(name = "start_time")
+    private String startTime;
+
+    @Column(name = "end_time")
+    private String endTime;
 
 }

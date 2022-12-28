@@ -11,25 +11,28 @@ import java.time.LocalDateTime;
 @Getter @Setter @ToString
 public class ScheduleDto {
 
-    private Integer sch_id;
+    private Integer schId;
+
+    // 예약 기능 연동 시 추가
     // private Booking booking;
-    private String sch_title;
-    private String sch_content;
-    private String start_date;
-    private String end_date;
-    private String sch_group;
+
+    private String schTitle;
+    private String schContent;
+    private String startDate;
+    private String endDate;
+    private String schGroup;
     private String createdBy;
-    private String sch_date;
+    private String schDate;
 
     public ScheduleDto() {}
 
     public ScheduleDto(Schedule schedule) {
-        this.sch_id = schedule.getSch_id();
-        this.sch_title = schedule.getSch_title();
-        this.sch_content = schedule.getSch_content();
-        this.start_date = schedule.getStart_date();
-        this.end_date = schedule.getEnd_date();
-        this.sch_group = schedule.getSch_group();
+        this.schId = schedule.getSchId();
+        this.schTitle = schedule.getSchTitle();
+        this.schContent = schedule.getSchContent();
+        this.startDate = schedule.getStartDate();
+        this.endDate = schedule.getEndDate();
+        this.schGroup = schedule.getSchGroup();
         this.createdBy = schedule.getCreatedBy();
     }
 

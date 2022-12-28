@@ -20,46 +20,46 @@
 
 	<div class="newContainer">
 		<div class="mb-3">
-			<label for="task_id" class="form-label">글 번호</label>
-			<input type="text" class="form-control" value="${task.task_id}"
-			id="task_id" readonly>
+			<label for="taskId" class="form-label">글 번호</label>
+			<input type="text" class="form-control" value="${task.taskId}"
+			id="taskId" readonly>
 		</div>
 		<div class="mb-3">
-		<!-- 부서 검색 가능하도록 변경 필요 -->
-			<label for="dept_name" class="form-label">부서</label>
+		<!-- 부서에 맞춰서 출력되도록 변경 필요 -->
+			<label for="deptName" class="form-label">부서</label>
 			<input type="text" class="form-control"
-			id="dept_name" value="부서1" readonly>
+			id="deptName" value="부서1" readonly>
 			<input type="hidden" class="form-control"
-			id="dept_id" value="${task.dept_id}">
+			id="deptId" value="${task.department}">
 		</div>
 		<div class="mb-3">
-			<label for="task_title" class="form-label">제목</label>
-			<input type="text" class="form-control" value="${task.task_title}"
-			id="task_title" placeholder="글 제목" readonly>
+			<label for="taskTitle" class="form-label">제목</label>
+			<input type="text" class="form-control" value="${task.taskTitle}"
+			id="taskTitle" placeholder="글 제목" readonly>
 		</div>
 		<div class="mb-3">
 			<label for="name" class="form-label">작성자</label>
 			<input class="form-control" type="text" value="${task.writer}"
 				id="name" readonly>
 			<input class="form-control" type="hidden" value="${task.createBy}"
-				id="emp_id">
+				id="empId">
 		</div>
 		<div class="mb-3 form-check">
 			<div>
-				<input class="form-check-input" type="radio" name="t_private"
-					id="t_private1" checked> <label
-					class="form-check-label" for="t_private1"> 전체공개 </label>
+				<input class="form-check-input" type="radio" name="tPrivate"
+					id="tPrivate1" checked> <label
+					class="form-check-label" for="tPrivate1"> 전체공개 </label>
 			</div>
 			<div>
-				<input class="form-check-input" type="radio" name="t_private"
-					id="t_private2"> <label class="form-check-label"
-					for="t_private2"> 부서원에게만 공개 </label>
+				<input class="form-check-input" type="radio" name="tPrivate"
+					id="tPrivate2"> <label class="form-check-label"
+					for="tPrivate2"> 부서원에게만 공개 </label>
 			</div>
 		</div>
 		<div class="mb-3">
-			<label for="task_content" class="form-label">내용</label>
-			<textarea class="form-control" id="task_content" rows="10" readonly>
-				<c:out value="${task.task_content}"></c:out>
+			<label for="taskContent" class="form-label">내용</label>
+			<textarea class="form-control" id="taskContent" rows="10" readonly>
+				<c:out value="${task.taskContent}"></c:out>
 			</textarea>
 		</div>
 		<div class="mb-3">
@@ -67,9 +67,9 @@
 			<input class="form-control form-control-sm" id="formFileSm" type="file" readonly>
 			<ul class="taskFiles">
 				<c:forEach items="${ task.fileList }" var="f">
-					<li data-uuid="${ f.uuid }" data-file_name="${ f.file_name }"
-						data-file_src="${ f.file_src }">
-						<a><c:out value="${ f.file_name }"/></a>
+					<li data-uuid="${ f.uuid }" data-fileName="${ f.fileName }"
+						data-fileSrc="${ f.fileSrc }">
+						<a><c:out value="${ f.fileName }"/></a>
 					</li>
 				</c:forEach>
 			</ul>
@@ -89,11 +89,11 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			
-			var taskEmp_id = "${task.createBy}";
-			var principalEmp_id = "${emp.empId}";
-			console.log(taskEmp_id);
-			console.log(principalEmp_id);
-			if(taskEmp_id != principalEmp_id) {
+			var taskEmpId = "${task.createBy}";
+			var principalEmpId = "${emp.empId}";
+			console.log(taskEmpId);
+			console.log(principalEmpId);
+			if(taskEmpId != principalEmpId) {
 				$('.own').hide();
 			}
 			
@@ -101,10 +101,10 @@
 			$('.taskFiles li').each(function(i, obj){
 				var file = {
 						uuid: $(obj).data('uuid'),
-						file_name: $(obj).data('file_name'),
-						file_src: $(obj).data('file_src'),
+						fileName: $(obj).data('fileName'),
+						fileSrc: $(obj).data('fileSrc'),
 					};
-				var filePath = encodeURIComponent(file.file_src + "/" + file.uuid + "_" + file.file_name);
+				var filePath = encodeURIComponent(file.fileSrc + "/" + file.uuid + "_" + file.fileName);
 				$(obj).attr("class", "file");
 				$(obj).children('a').attr("href", "/task/download?fileName=" + filePath);
 				$(obj).append("<span class='fileDelete' data-file=\'" + filePath + "\'> [x] </span>");
@@ -121,9 +121,9 @@
 				
 				// 수정 버튼 클릭 시 수정 가능한 사항들을 입력(수정) 가능한 상태로 바꿈
 				$('.form-check *').show();
-				$('#dept_id').attr("readonly", false);
-				$('#task_title').attr("readonly", false);
-				$('#task_content').attr("readonly", false);
+				$('#department').attr("readonly", false);
+				$('#taskTitle').attr("readonly", false);
+				$('#taskContent').attr("readonly", false);
 				
 				// 첨부파일의 다운로드는 불가, 삭제는 가능 상태로 만듦
 				$('.taskFiles li a').attr("href", "");
@@ -142,7 +142,7 @@
 				
 				// 항목 체크에 따른 값 저장
 				let isPrivate;
-				if($('#t_private1').is(":checked")) {
+				if($('#tPrivate1').is(":checked")) {
 					isPrivate = 'Y';
 				} else {
 					isPrivate = 'N';
@@ -150,11 +150,11 @@
 				
 				// 폼 입력값 객체에 대입
 				var updateTask = {
-					dept_id: $('#dept_id').val(),
-					task_title: $('#task_title').val(),
-					task_content: $('#task_content').val(),
-					t_private: isPrivate,
-					task_id: $('#task_id').val(),
+					department: $('#department').val(),
+					taskTitle: $('#taskTitle').val(),
+					taskContent: $('#taskContent').val(),
+					tPrivate: isPrivate,
+					taskId: $('#taskId').val(),
 					type: 'empty',
 					keyword: 'empty',
 					pageNum: 1
@@ -163,16 +163,16 @@
 				// 객체 전달하여 DB에 저장 후 페이지 이동
 				taskService.updateTask(updateTask, function(result){
 					// href 대신 replace 이용하여 히스토리 남지 않게 처리
-					location.replace("/task/pages/" + updateTask.dept_id + "/" + updateTask.type + "/" + updateTask.keyword
-				            + "/" + updateTask.pageNum + "/" + updateTask.task_id);
+					location.replace("/task/pages/" + updateTask.department + "/" + updateTask.type + "/" + updateTask.keyword
+				            + "/" + updateTask.pageNum + "/" + updateTask.taskId);
 				});
 
 			}); // end update data submit click event
 			
 			// 삭제 버튼 클릭 시 이벤트
 			$('#deleteBtn').on("click", function(){
-				taskService.deleteTask($('#task_id').val(), function(result) {
-					location.replace("/task/pages/" + $('#dept_id').val() + "/empty/empty/1");
+				taskService.deleteTask($('#taskId').val(), function(result) {
+					location.replace("/task/pages/" + $('#department').val() + "/empty/empty/1");
 				}); 
 				
 			}); // end delete click
@@ -194,7 +194,7 @@
 		            },
 		            type: 'delete',
 		            data: JSON.stringify(
-		            		{file_name: fileName,
+		            		{fileName: fileName,
 		            		uuid: uuid}
 		            		),
 		            contentType : "application/json; charset=utf-8",

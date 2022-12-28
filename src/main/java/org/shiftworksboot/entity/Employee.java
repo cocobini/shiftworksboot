@@ -6,7 +6,6 @@ import org.shiftworksboot.dto.EmployeeFormDto;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "employee")
@@ -30,22 +29,26 @@ public class Employee {
     private String mobile;
     private String internal;
     private String email;
-    private String entry_date;
-    private String resignation_date;
-    private String digital_sign;
-    private String profile_photo;
-    private int failures_num;
+
+    @Column(name = "entry_date")
+    private String entryDate;
+
+    @Column(name = "resignation_date")
+    private String resignationDate;
+
+    @Column(name = "digital_sign")
+    private String digitalSign;
+
+    @Column(name = "profile_photo")
+    private String profilePhoto;
+
+    @Column(name = "failures_num")
+    private int failuresNum;
+
     private String memo;
-    private String emp_id2;
-    private String dept_id2;
 
     @Enumerated(EnumType.STRING)
     private Role authority;
-
-//    public void addDepartment(Department department){
-//        department.getEmployees().add(this);
-//        this.department = department;
-//    }
 
     public static Employee createEmployee(EmployeeFormDto employeeFormDto,
                                           PasswordEncoder passwordEncoder){
@@ -60,8 +63,8 @@ public class Employee {
         employee.setMobile(employeeFormDto.getMobile());
         employee.setInternal(employeeFormDto.getInternal());
         employee.setEmail(employeeFormDto.getEmail());
-        employee.setEntry_date(employeeFormDto.getEntry_date());
-        employee.setResignation_date(employeeFormDto.getResignation_date());
+        employee.setEntryDate(employeeFormDto.getEntryDate());
+        employee.setResignationDate(employeeFormDto.getResignationDate());
 
         employee.setPassword(password);
         employee.setAuthority(Role.USER);

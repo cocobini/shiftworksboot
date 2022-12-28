@@ -14,9 +14,9 @@ public class TaskFileDto {
 
     private Task task;
 
-    private String file_name;
+    private String fileName;
 
-    private String file_src;
+    private String fileSrc;
 
 
     public TaskFileDto () {
@@ -25,8 +25,8 @@ public class TaskFileDto {
     public TaskFileDto (TaskFile taskFile) {
         this.uuid = taskFile.getUuid();
         this.task = taskFile.getTask();
-        this.file_name = taskFile.getFile_name();
-        this.file_src = taskFile.getFile_src();
+        this.fileName = taskFile.getFileName();
+        this.fileSrc = taskFile.getFileSrc();
     }
     private static ModelMapper modelMapper = new ModelMapper();
     public TaskFile createTaskFile() {

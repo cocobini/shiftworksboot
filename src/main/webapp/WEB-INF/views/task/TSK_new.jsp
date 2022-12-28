@@ -31,12 +31,12 @@
   				<option value="INFO-SECU">보안</option>
 			</select>
 			<input type="hidden" class="form-control"
-			id="dept_id" value="">
+			id="department" value="">
 		</div>
 		<div class="mb-3">
-			<label for="task_title" class="form-label">제목</label>
+			<label for="taskTitle" class="form-label">제목</label>
 			<input type="text" class="form-control"
-			id="task_title" placeholder="글 제목">
+			id="taskTitle" placeholder="글 제목">
 		</div>
 		<div class="mb-3 form-check">
 			<div>
@@ -52,19 +52,19 @@
 		</div>
 		<div class="mb-3 form-check">
 			<div>
-				<input class="form-check-input" type="radio" name="t_private"
-					id="t_privateN" checked> <label
-					class="form-check-label" for="t_privateN"> 전체공개 </label>
+				<input class="form-check-input" type="radio" name="tPrivate"
+					id="tPrivateN" checked> <label
+					class="form-check-label" for="tPrivateN"> 전체공개 </label>
 			</div>
 			<div>
-				<input class="form-check-input" type="radio" name="t_private"
-					id="t_privateY"> <label class="form-check-label"
-					for="t_privateY"> 부서원에게만 공개 </label>
+				<input class="form-check-input" type="radio" name="tPrivate"
+					id="tPrivateY"> <label class="form-check-label"
+					for="tPrivateY"> 부서원에게만 공개 </label>
 			</div>
 		</div>
 		<div class="mb-3">
-			<label for="task_content" class="form-label">내용</label>
-			<textarea class="form-control" id="task_content" rows="10"></textarea>
+			<label for="taskContent" class="form-label">내용</label>
+			<textarea class="form-control" id="taskContent" rows="10"></textarea>
 		</div>
 		<div class="mb-3">
 			<label for="formFileSm" class="form-label file">첨부파일</label>
@@ -92,7 +92,7 @@
 			
 			// 부서 선택 시 input value에 값 입력
 			$('.dept').on("change", function(e){
-				$('#dept_id').val($(this).val());
+				$('#deptId').val($(this).val());
 			});
 			
 			// 폼 제출(작성) 버튼 클릭 시 이벤트
@@ -102,7 +102,7 @@
 				// 항목 체크에 따른 값 저장
 				let isPrivate;
 				let isNotification;
-				if($('#t_privateY').is(":checked")) {
+				if($('#tPrivateY').is(":checked")) {
 					isPrivate = 'Y';
 				} else {
 					isPrivate = 'N';
@@ -118,17 +118,17 @@
 				$('.uploadResult ul li').each(function(i, obj) {
 					fileList.push({
 						uuid: $(obj).data('uuid'),
-						file_name: $(obj).data('file_name'),
-						file_src: $(obj).data('file_src'),
+						fileName: $(obj).data('fileName'),
+						fileSrc: $(obj).data('fileSrc'),
 					});
 				}); // end li each
 				
 				// 폼 입력값 객체에 대입
 				var newTask = {
-					dept_id: $('#dept_id').val(),
-					task_title: $('#task_title').val(),
-					task_content: $('#task_content').val(),
-					t_private: isPrivate,
+					deptId: $('#deptId').val(),
+					taskTitle: $('#taskTitle').val(),
+					taskContent: $('#taskContent').val(),
+					tPrivate: isPrivate,
 					notification: isNotification,
 					fileList: fileList
 				}
@@ -136,7 +136,7 @@
 				// 객체 전달하여 DB에 저장 후 페이지 이동
 				taskService.insertTask(newTask, function(result){
 					// href 대신 replace 이용하여 히스토리 남지 않게 처리
-					location.replace("/task/pages/" + newTask.dept_id.toLowerCase() + "/empty/empty/1");
+					location.replace("/task/pages/" + newTask.deptId.toLowerCase() + "/empty/empty/1");
 				});
 
 			}); // end submit click event
@@ -189,11 +189,11 @@
 				var str = "";
 				$(uploadResultArr).each(function(i, obj) {
 					// 파일 경로와 이름을 저장하는 변수
-					var filePath = encodeURIComponent(obj.file_src + "/" + obj.uuid + "_" + obj.file_name);
+					var filePath = encodeURIComponent(obj.fileSrc + "/" + obj.uuid + "_" + obj.fileName);
 					
-					str += "<li data-uuid='"+ obj.uuid +"' data-file_name='" + obj.file_name + "' ";
-					str += "data-file_src='" + obj.file_src + "'>";
-					str += obj.file_name;
+					str += "<li data-uuid='"+ obj.uuid +"' data-fileName='" + obj.fileName + "' ";
+					str += "data-fileSrc='" + obj.fileSrc + "'>";
+					str += obj.fileName;
 					str += "<span data-file=\'" + filePath + "\'> [x] </span>";
 					str += "</li>";
 
@@ -269,7 +269,7 @@
 		            },
 		            type: 'delete',
 		            data: JSON.stringify(
-		            		{file_name: fileName}
+		            		{fileName: fileName}
 		            		),
 		            contentType : "application/json; charset=utf-8",
 		            dataType: 'text',

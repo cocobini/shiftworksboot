@@ -11,5 +11,5 @@ import java.util.List;
 public interface EmployeeRepository extends JpaRepository<Employee, String> {
     Employee findByEmpId(String empId);
 
-    List<Employee> findByDepartmentDeptId(String deptId);
+    List<Employee> findByDepartmentDeptId(String department);
 }

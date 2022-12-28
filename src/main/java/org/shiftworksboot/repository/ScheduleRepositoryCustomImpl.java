@@ -17,7 +17,7 @@ public class ScheduleRepositoryCustomImpl implements ScheduleRepositoryCustom {
     }
 
     @Override
-    public List<Schedule> findMySchedule(String empId, String sch_group, String selectedDate) {
+    public List<Schedule> findMySchedule(String empId, String schGroup, String selectedDate) {
 
         // 선택일자가 없는 경우 null 리턴
         if(!StringUtils.hasText(selectedDate)) {
@@ -59,7 +59,7 @@ public class ScheduleRepositoryCustomImpl implements ScheduleRepositoryCustom {
         List<Schedule> list = queryFactory
                 .selectFrom(qSchedule)
                 .where(isOwn(empId),
-                        selectGroup(sch_group),
+                        selectGroup(schGroup),
                         period(periodStart, periodEnd))
                 .fetch();
 
@@ -72,14 +72,14 @@ public class ScheduleRepositoryCustomImpl implements ScheduleRepositoryCustom {
     }
 
     // 선택 그룹에 대해서만 조회
-    private BooleanExpression selectGroup(String sch_group) {
-        return StringUtils.hasText(sch_group) ? QSchedule.schedule.sch_group.eq(sch_group) : null;
+    private BooleanExpression selectGroup(String schGroup) {
+        return StringUtils.hasText(schGroup) ? QSchedule.schedule.schGroup.eq(schGroup) : null;
     }
 
     // 선택 날짜 기준 한 달만 조회
     private BooleanExpression period(String periodStart, String periodEnd) {
 
         return StringUtils.hasText(periodStart) && StringUtils.hasText(periodEnd) ?
-                QSchedule.schedule.start_date.between(periodStart, periodEnd) : null ;
+                QSchedule.schedule.startDate.between(periodStart, periodEnd) : null ;
     }
 }
